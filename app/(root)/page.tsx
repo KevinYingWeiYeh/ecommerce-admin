@@ -1,11 +1,22 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { Modal } from "@/components/ui/modal";
+import { UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
     <div className="p-4">
-      <Button size="default" variant="outline">
-        Click Me
-      </Button>
+      <Modal
+        isOpen={true}
+        title={"Test"}
+        description={"Test"}
+        onClose={() => {
+          throw new Error("Function not implemented.");
+        }}
+      >
+        Children
+      </Modal>
+      <UserButton afterSignOutUrl="/" />
     </div>
   );
 }
