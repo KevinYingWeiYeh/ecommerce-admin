@@ -1,11 +1,39 @@
 "use client";
 
+import * as zod from "zod";
+import { useForm } from "react-hook-form";
+
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { Modal } from "@/components/ui/modal";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+const formSchema = zod.object({
+  name: zod.string().min(1),
+});
 
 export const StoreModal = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const storeModal = useStoreModal();
+
+  const form = useForm<zod.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+    },
+  });
+
+  const onSubmit = async (values: zod.infer<typeof formSchema>) => {
+    console.log(values);
+    // TODO: Create Store
+  };
 
   return (
     <Modal
@@ -14,7 +42,24 @@ export const StoreModal = () => {
       isOpen={storeModal.isOpen}
       onClose={storeModal.onClose}
     >
-      Future Create Store Form
+      <div className="space-y-4 py-2 pb-4">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="E-Commerce" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+      </div>
     </Modal>
   );
 };
