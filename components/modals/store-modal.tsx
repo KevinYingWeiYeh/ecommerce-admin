@@ -12,8 +12,10 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const formSchema = zod.object({
   name: zod.string().min(1),
@@ -54,9 +56,16 @@ export const StoreModal = () => {
                   <FormControl>
                     <Input placeholder="E-Commerce" {...field} />
                   </FormControl>
+                  <FormMessage>Required</FormMessage>
                 </FormItem>
               )}
             />
+            <div className="pt-6 space-x-2 flex items-center justify-end w-full">
+              <Button variant="outline" onClick={storeModal.onClose}>
+                Cancel
+              </Button>
+              <Button type={"submit"}>Continue</Button>
+            </div>
           </form>
         </Form>
       </div>
